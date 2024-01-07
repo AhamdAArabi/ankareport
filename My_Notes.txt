@@ -1,0 +1,17 @@
+⚓To Create New Controle Item
+    1.0-   ReportSection._onContentDrop(e: DragEvent)             src/designer/reportSection/reportSection.ts#L367
+    1.1- const item = this.createItem({text: text ,x: e.offsetX,y: e.offsetY,width: 100,height: 20,})      src/designer/reportSection/reportSection.ts#L372
+    2.0-   ReportSection.createItem(defaultProperties: Partial<IReportItem>)  src/designer/reportSection/reportSection.ts#L221
+    2.1-   const item = new DesignerReportItem({  parentStyles: this.styles.getList(),  defaultProperties,  appendTo: this.elementContent,});   src/designer/reportSection/reportSection.ts#L222
+
+
+
+
+
+
+
+
+
+
+
+

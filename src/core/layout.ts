@@ -23,6 +23,18 @@ export interface IReportItem extends IStyle {
   text: string;
   binding?: string;
 }
+export interface IReportItemsFactory extends IStyle {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  name: string;
+  type: string;
+}
+export interface IReportLableItem extends IReportItemsFactory {
+  text: string;
+  binding?: string;
+}
 
 export interface IStyle {
   color?: string;
