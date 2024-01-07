@@ -1,5 +1,5 @@
-import ReportItem from "../../core/reportItem";
 import { DataSourceTreeItemData } from "../components/dataSourceTreeList";
+import ReportItemsFactory from "../reportItemsFactory/base/reportItemsFactory";
 import { SelectEventArgs } from "./area-selector";
 import ReportSection from "./reportSection";
 
@@ -32,8 +32,8 @@ export function getReportSectionBindings(section: ReportSection): string[] {
   return result;
 }
 
-export function findItemsByRect(items: ReportItem[], rect: SelectEventArgs) {
-  const selected: ReportItem[] = [];
+export function findItemsByRect(items: ReportItemsFactory[], rect: SelectEventArgs) {
+  const selected: ReportItemsFactory[] = [];
 
   for (const item of items) {
     if (isItemInRect(rect, item)) {
@@ -44,7 +44,7 @@ export function findItemsByRect(items: ReportItem[], rect: SelectEventArgs) {
   return selected;
 }
 
-function isItemInRect(rect: SelectEventArgs, item: ReportItem) {
+function isItemInRect(rect: SelectEventArgs, item: ReportItemsFactory) {
   if (!isPointInRect(rect, { x: item.properties.x, y: item.properties.y }))
     return false;
 

@@ -1,4 +1,5 @@
 import ReportItem from "../../core/reportItem";
+import ReportItemsFactory from "../reportItemsFactory/base/reportItemsFactory";
 import ReportItemSelector from "./reportItemSelector";
 
 const NORMALIZE_POINT_TOLERANCE_PX = 3;
@@ -13,7 +14,7 @@ export interface NormalizeEdges {
 export function normalizePoints(
   edges: NormalizeEdges,
   selector: ReportItemSelector,
-  items: ReportItem[],
+  items: ReportItemsFactory[],
 ) {
   const isMoving = edges.left && edges.right && edges.top && edges.bottom;
 

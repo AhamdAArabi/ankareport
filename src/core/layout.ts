@@ -10,7 +10,7 @@ export interface ILayout extends IStyle {
 export interface ISection extends IStyle {
   height: number;
   binding: string;
-  items?: IReportItem[];
+  items?: IReportItemsFactory[];
   sections?: ISection[];
 }
 

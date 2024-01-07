@@ -1,7 +1,7 @@
 import ContextMenu from "../../components/contextMenu/contextMenu";
 import { MenuButton } from "../../components/menu/menu";
 import EventEmitter, { EventCallback } from "../../core/eventEmitter";
-import { ISection, IReportItem } from "../../core/layout";
+import { ISection, IReportItem, IReportItemsFactory } from "../../core/layout";
 import StyleProperties, { TextAlign } from "../../core/styleProperties";
 import { MultipleStyles } from "../../core/utils/style.utils";
 import { DataSourceTreeItemData } from "../components/dataSourceTreeList";
@@ -23,6 +23,8 @@ import ReportSectionProperties from "./reportSectionProperties";
 
 import "./reportSection.css";
 import AreaSelector from "./area-selector";
+import ReportItemsFactory, { ItemsTypes } from "../reportItemsFactory/base/reportItemsFactory";
+import ReportLableItem from "../reportItemsFactory/reportLableItem";
 
 export interface ReportSectionOptions {
   title: string;
@@ -50,7 +52,7 @@ export default class ReportSection {
     },
   });
 
-  public items: DesignerReportItem[] = [];
+  public items: ReportItemsFactory[] = [];
   public subsections: ReportSection[] = [];
 
   public readonly properties = new ReportSectionProperties();
@@ -218,12 +220,27 @@ export default class ReportSection {
     }
   }
 
-  createItem(defaultProperties: Partial<IReportItem>) {
-    const item = new DesignerReportItem({
-      parentStyles: this.styles.getList(),
-      defaultProperties,
-      appendTo: this.elementContent,
-    });
+  createItem(defaultProperties: Partial<IReportItemsFactory>, type: string) {
+    let item: ReportItemsFactory;
+    switch (type) {
+      case ItemsTypes.Label:
+        item = new ReportLableItem({
+          parentStyles: this.styles.getList(),
+          defaultProperties,
+          appendTo: this.elementContent,
+        });
+        
+        break;
+    
+      default:
+        item = new ReportLableItem({
+          parentStyles: this.styles.getList(),
+          defaultProperties,
+          appendTo: this.elementContent,
+        });
+        break;
+    }
+
     item.addEventListener("change", (e) => {
       this._onChange({ type: "change-item", item, changes: e.changes });
     });
@@ -246,13 +263,13 @@ export default class ReportSection {
     }
   }
 
-  removeItem(item: DesignerReportItem) {
+  removeItem(item: ReportItemsFactory) {
     const index = this.items.findIndex((x) => x === item);
     this.items.splice(index, 1);
     item.dispose();
   }
 
-  selectItem(items: DesignerReportItem[]) {
+  selectItem(items: ReportItemsFactory[]) {
     this.deselectAll();
 
     if (items.length === 0) return;
@@ -306,7 +323,7 @@ export default class ReportSection {
     if (layout.binding) this.properties.binding = layout.binding;
 
     layout.items?.forEach((data) => {
-      this.createItem(data);
+      this.createItem(data, data.type);
     });
 
     layout.sections?.forEach((data) => {
@@ -367,17 +384,17 @@ export default class ReportSection {
   private _onContentDrop(e: DragEvent) {
     e.preventDefault();
 
-    const type = e.dataTransfer?.getData("data-item-type");
-    const text = e.dataTransfer?.getData("label");
+    const dataItemType = e.dataTransfer?.getData("data-item-type");
+    const type = dataItemType as string;
     
-    const item = this.createItem({
-      text: text || "Label",
-      binding: e.dataTransfer?.getData("field") || "",
-      x: e.offsetX,
-      y: e.offsetY,
-      width: 100,
-      height: 20,
-    });
+    let item: ReportItemsFactory= this.createItem({
+        x: e.offsetX,
+        y: e.offsetY,
+        width: 100,
+        height: 20,
+      }, type);
+  
+    
 
     this.selectItem([item]);
   }

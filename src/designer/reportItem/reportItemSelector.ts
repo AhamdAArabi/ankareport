@@ -6,17 +6,17 @@ import Point from "../../core/point";
 import { ChangeEventArgs } from "../../core/properties";
 import Size from "../../core/size";
 import ReportSection from "../reportSection/reportSection";
-import DesignerReportItem from "./designerReportItem";
 import { NormalizeEdges, normalizePoints } from "./normalizePoint";
 import SelectorBound, { SelectorBoundOrientation } from "./selectorBound";
 
 import "./reportItemSelector.css";
+import ReportItemsFactory from "../reportItemsFactory/base/reportItemsFactory";
 
 const LONG_MOVE_DISTANCE = 10;
 const SHORT_MOVE_DISTANCE = 1;
 
 export interface ReportItemSelectorContextMenuArgs {
-  items: DesignerReportItem[];
+  items: ReportItemsFactory[];
   width: string;
   buttons: MenuButton[];
   onClick: (ev: ClickEventArgs) => void;
@@ -28,7 +28,7 @@ export interface ReportItemSelectorEventMap {
 
 export default class ReportItemSelector {
   public readonly element = document.createElement("div");
-  public attachedTo: DesignerReportItem[] = [];
+  public attachedTo: ReportItemsFactory[] = [];
 
   private readonly boundTL = new SelectorBound(
     SelectorBoundOrientation.TopLeft,
@@ -252,7 +252,7 @@ export default class ReportItemSelector {
     this.element.style.height = this.newSize.height + "px";
   }
 
-  show(items: DesignerReportItem[]) {
+  show(items: ReportItemsFactory[]) {
     if (this.attachedTo.length > 0) {
       this.hide();
     }
