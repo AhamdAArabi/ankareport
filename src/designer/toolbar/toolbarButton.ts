@@ -1,3 +1,4 @@
+import { ItemsTypes } from "../reportItemsFactory/base/reportItemsFactory";
 import "./toolbarButton.css";
 
 export interface ToolbarButtonOptions {
@@ -5,6 +6,7 @@ export interface ToolbarButtonOptions {
   text: string;
   title: string;
   draggable?: boolean;
+  type?: ItemsTypes;
 }
 
 export default class ToolbarButton {
@@ -64,6 +66,14 @@ export default class ToolbarButton {
     this._title = options.title;
     this.element.style.width = 25 + "px";
     this.element.style.height = 25 + "px";
+    
+    if(options?.type != null){
+      this.element.setAttribute("data-item-type", options?.type.toString());
+      this.element.addEventListener("dragstart", (event) => {
+        if(event.dataTransfer && options?.type != null)
+          event.dataTransfer.setData("data-item-type", options.type.toString());
+      });
+    }
 
     if (options.draggable) {
       this._draggable = options.draggable;
@@ -90,6 +100,7 @@ export default class ToolbarButton {
   }
 
   addEventListener(event: "click", callback: () => void) {
+    // debugger
     switch (event) {
       case "click":
         this.element.addEventListener("click", callback);

@@ -367,8 +367,9 @@ export default class ReportSection {
   private _onContentDrop(e: DragEvent) {
     e.preventDefault();
 
+    const type = e.dataTransfer?.getData("data-item-type");
     const text = e.dataTransfer?.getData("label");
-
+    
     const item = this.createItem({
       text: text || "Label",
       binding: e.dataTransfer?.getData("field") || "",

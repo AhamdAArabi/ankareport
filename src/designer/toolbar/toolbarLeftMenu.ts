@@ -1,3 +1,4 @@
+import { ItemsTypes } from "../reportItemsFactory/base/reportItemsFactory";
 import Toolbar, { ToolbarOrientation } from "./toolbar";
 import ToolbarButton from "./toolbarButton";
 
@@ -11,6 +12,7 @@ export default class ToolbarLeftMenu extends Toolbar {
       text: "Ͳ",
       title: "Label",
       draggable: true,
+      type: ItemsTypes.Label
     });
   }
 }
