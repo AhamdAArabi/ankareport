@@ -2,6 +2,7 @@ import { IReportLableItem as LayoutReportLableItem } from "../../core/layout";
 import { ChangeEventArgs } from "../../core/properties";
 import ReportItemProperties from "../../core/reportItemProperties";
 import { TextAlign } from "../../core/styleProperties";
+import { MultipleStyles } from "../../core/utils/style.utils";
 import ReportItemsFactory, { ReportItemsFactoryOptions } from "./base/reportItemsFactory";
 
 
@@ -13,9 +14,19 @@ export default class ReportLableItem extends ReportItemsFactory {
 
   // public readonly properties = new ReportItemProperties();
 
+  private readonly properties = new ReportItemProperties();
+  private readonly _styles: MultipleStyles;
+
 
   constructor(options: ReportItemsFactoryOptions) {
     super(options);
+
+
+    this._styles = new MultipleStyles(...options.parentStyles, this.properties);
+
+    if (options.defaultProperties) {
+      this.loadLayout(options.defaultProperties);
+    }
 
     this.init();
   }

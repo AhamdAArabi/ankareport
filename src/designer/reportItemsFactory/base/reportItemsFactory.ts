@@ -29,9 +29,6 @@ export interface ReportItemsFactoryOptions {
 export default abstract class ReportItemsFactory implements IDisposable {
   public readonly element: HTMLElement;
 
-  public readonly properties = new ReportItemProperties();
-  protected readonly _styles: MultipleStyles;
-
   protected readonly _changeEventEmitter = new EventEmitter<ChangeEventArgs>();
 
   abstract refresh():void;
@@ -48,13 +45,6 @@ export default abstract class ReportItemsFactory implements IDisposable {
     if (options.appendTo) {
       options.appendTo.appendChild(this.element);
     }
-
-    this._styles = new MultipleStyles(...options.parentStyles, this.properties);
-
-    if (options.defaultProperties) {
-      this.loadLayout(options.defaultProperties);
-    }
-
   }
 
 
