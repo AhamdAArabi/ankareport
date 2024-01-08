@@ -1,7 +1,7 @@
 import ContextMenu from "../../components/contextMenu/contextMenu";
 import { MenuButton } from "../../components/menu/menu";
 import EventEmitter, { EventCallback } from "../../core/eventEmitter";
-import { ISection, IReportItem, IReportItemsFactory } from "../../core/layout";
+import { ISection, IReportItem, IReportItemsFactory, IReportLableItem } from "../../core/layout";
 import StyleProperties, { TextAlign } from "../../core/styleProperties";
 import { MultipleStyles } from "../../core/utils/style.utils";
 import { DataSourceTreeItemData } from "../components/dataSourceTreeList";
@@ -220,13 +220,22 @@ export default class ReportSection {
     }
   }
 
-  createItem(defaultProperties: Partial<IReportItemsFactory>, type: string) {
+  createItem(defaultPropertiesData: Partial<IReportItemsFactory>, type: string) {
     let item: ReportItemsFactory;
     switch (type) {
       case ItemsTypes.Label:
+        const defaultProperties:IReportLableItem = {
+          x: defaultPropertiesData.x!,
+          y: defaultPropertiesData.y!,
+          width: defaultPropertiesData.width!,
+          height: defaultPropertiesData.height!,
+          name: defaultPropertiesData.name!,
+          type: defaultPropertiesData.type!,
+          text: "label"
+        } 
         item = new ReportLableItem({
           parentStyles: this.styles.getList(),
-          defaultProperties: {...defaultProperties, type: "div"},
+          defaultProperties,
           appendTo: this.elementContent,
         });
         
@@ -235,7 +244,7 @@ export default class ReportSection {
       default:
         item = new ReportLableItem({
           parentStyles: this.styles.getList(),
-          defaultProperties: {...defaultProperties, type: "div"},
+          defaultProperties: {...defaultPropertiesData, type: "div"},
           appendTo: this.elementContent,
         });
         break;

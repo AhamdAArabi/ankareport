@@ -11,7 +11,7 @@ export interface ReportLableItemOptions extends ReportItemsFactoryOptions {
 
 export default class ReportLableItem extends ReportItemsFactory {
 
-  public readonly properties = new ReportItemProperties();
+  // public readonly properties = new ReportItemProperties();
 
 
   constructor(options: ReportItemsFactoryOptions) {
@@ -36,7 +36,7 @@ export default class ReportLableItem extends ReportItemsFactory {
     });
     this.properties.addEventListener("change", (e) => this._onChange(e));
 
-    // this.refresh();
+    this.refresh();
   }
 
   refresh() {
