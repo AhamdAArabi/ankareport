@@ -226,7 +226,7 @@ export default class ReportSection {
       case ItemsTypes.Label:
         item = new ReportLableItem({
           parentStyles: this.styles.getList(),
-          defaultProperties,
+          defaultProperties: {...defaultProperties, type: "div"},
           appendTo: this.elementContent,
         });
         
@@ -235,7 +235,7 @@ export default class ReportSection {
       default:
         item = new ReportLableItem({
           parentStyles: this.styles.getList(),
-          defaultProperties,
+          defaultProperties: {...defaultProperties, type: "div"},
           appendTo: this.elementContent,
         });
         break;
@@ -386,7 +386,7 @@ export default class ReportSection {
 
     const dataItemType = e.dataTransfer?.getData("data-item-type");
     const type = dataItemType as string;
-    
+
     let item: ReportItemsFactory= this.createItem({
         x: e.offsetX,
         y: e.offsetY,

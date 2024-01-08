@@ -36,7 +36,7 @@ export default class ReportLableItem extends ReportItemsFactory {
     });
     this.properties.addEventListener("change", (e) => this._onChange(e));
 
-    this.refresh();
+    // this.refresh();
   }
 
   refresh() {
