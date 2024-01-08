@@ -14,5 +14,11 @@ export default class ToolbarLeftMenu extends Toolbar {
       draggable: true,
       type: ItemsTypes.Label
     });
+    this.labelButton = this.addButton({
+      text: "📅",
+      title: "Table",
+      draggable: true,
+      type: ItemsTypes.table
+    });
   }
 }

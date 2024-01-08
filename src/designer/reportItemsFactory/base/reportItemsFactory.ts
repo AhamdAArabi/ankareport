@@ -29,6 +29,8 @@ export interface ReportItemsFactoryOptions {
 export default abstract class ReportItemsFactory implements IDisposable {
   public readonly element: HTMLElement;
 
+  public readonly properties = new ReportItemProperties();
+
   protected readonly _changeEventEmitter = new EventEmitter<ChangeEventArgs>();
 
   abstract refresh():void;

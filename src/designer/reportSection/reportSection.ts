@@ -25,6 +25,7 @@ import "./reportSection.css";
 import AreaSelector from "./area-selector";
 import ReportItemsFactory, { ItemsTypes } from "../reportItemsFactory/base/reportItemsFactory";
 import ReportLableItem from "../reportItemsFactory/reportLableItem";
+import ReportTableItem from "../reportItemsFactory/reportTableItem";
 
 export interface ReportSectionOptions {
   title: string;
@@ -222,18 +223,36 @@ export default class ReportSection {
 
   createItem(defaultPropertiesData: Partial<IReportItemsFactory>, type: string) {
     let item: ReportItemsFactory;
+    let defaultProperties:IReportItemsFactory | IReportLableItem;
+    debugger
     switch (type) {
       case ItemsTypes.Label:
-        const defaultProperties:IReportLableItem = {
+        defaultProperties = {
           x: defaultPropertiesData.x!,
           y: defaultPropertiesData.y!,
           width: defaultPropertiesData.width!,
           height: defaultPropertiesData.height!,
           name: defaultPropertiesData.name!,
-          type: defaultPropertiesData.type!,
+          type: "div",
           text: "label"
         } 
         item = new ReportLableItem({
+          parentStyles: this.styles.getList(),
+          defaultProperties,
+          appendTo: this.elementContent,
+        });
+        
+        break;
+      case ItemsTypes.table:
+        defaultProperties = {
+          x: defaultPropertiesData.x!,
+          y: defaultPropertiesData.y!,
+          width: defaultPropertiesData.width!,
+          height: defaultPropertiesData.height!,
+          name: defaultPropertiesData.name!,
+          type: "table"
+        } 
+        item = new ReportTableItem({
           parentStyles: this.styles.getList(),
           defaultProperties,
           appendTo: this.elementContent,

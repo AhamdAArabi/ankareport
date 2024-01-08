@@ -10,8 +10,7 @@ export interface ReportLableItemOptions extends ReportItemsFactoryOptions {
   defaultProperties: Partial<LayoutReportLableItem>;
 }
 
-export default class ReportLableItem extends ReportItemsFactory {
-
+export default class ReportTableItem extends ReportItemsFactory {
 
   private readonly _styles: MultipleStyles;
 
@@ -49,11 +48,12 @@ export default class ReportLableItem extends ReportItemsFactory {
   }
 
   refresh() {
+    debugger
     this.element.style.left = `${this.properties.x}px`;
     this.element.style.top = `${this.properties.y}px`;
     this.element.style.width = `${this.properties.width}px`;
     this.element.style.height = `${this.properties.height}px`;
-    this.element.innerText = this.properties.text;
+    // this.element.innerText = this.properties.text;
 
     this.element.style.color = this._styles.getStyle("color", "")!;
     this.element.style.backgroundColor = this._styles.getStyle(
