@@ -3,10 +3,10 @@ import StyleProperties from "./styleProperties";
 
 export default class ReportTableItemProperties extends StyleProperties {
 
-  private _rowsNumber= "";
-  private _columnsNumber= "";
-  private _rowHeight= "";
-  private _columnHeight= "";
+  private _rowsNumber:number = 0;
+  private _columnsNumber:number = 0;
+  private _rowHeight:string = "";
+  private _columnHeight:string = "";
 
   get rowsNumber() {
     return this._rowsNumber;
@@ -22,12 +22,12 @@ export default class ReportTableItemProperties extends StyleProperties {
   }
  
 
-  set rowsNumber(value: string) {
+  set rowsNumber(value: number) {
     const oldValue = this.rowsNumber;
     this._rowsNumber = value;
     this.emitOnChange("text", value, oldValue);
   }
-  set columnsNumber(value: string) {
+  set columnsNumber(value: number) {
     const oldValue = this.columnsNumber;
     this._columnsNumber = value;
     this.emitOnChange("binding", value, oldValue);

@@ -1,7 +1,7 @@
 import ContextMenu from "../../components/contextMenu/contextMenu";
 import { MenuButton } from "../../components/menu/menu";
 import EventEmitter, { EventCallback } from "../../core/eventEmitter";
-import { ISection, IReportItem, IReportItemsFactory, IReportLableItem } from "../../core/layout";
+import { ISection, IReportItem, IReportItemsFactory, IReportLableItem, IReportTableItem } from "../../core/layout";
 import StyleProperties, { TextAlign } from "../../core/styleProperties";
 import { MultipleStyles } from "../../core/utils/style.utils";
 import { DataSourceTreeItemData } from "../components/dataSourceTreeList";
@@ -223,7 +223,7 @@ export default class ReportSection {
 
   createItem(defaultPropertiesData: Partial<IReportItemsFactory>, type: string) {
     let item: ReportItemsFactory;
-    let defaultProperties:IReportItemsFactory | IReportLableItem;
+    let defaultProperties:IReportItemsFactory | IReportLableItem | IReportTableItem;
     
     switch (type) {
       case ItemsTypes.Label:
@@ -250,7 +250,9 @@ export default class ReportSection {
           width: 100,
           height: 50,
           name: "",
-          type: "table"
+          type: "table",
+          ColumnsNumber: 1,
+          RowsNumber: 1
         } 
         item = new ReportTableItem({
           parentStyles: this.styles.getList(),

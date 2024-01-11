@@ -36,8 +36,8 @@ export interface IReportLableItem extends IReportItemsFactory {
   binding?: string;
 }
 export interface IReportTableItem extends IReportItemsFactory {
-  RowsNumber: string;
-  ColumnsNumber: string;
+  RowsNumber: number;
+  ColumnsNumber: number;
   RowHeight: string;
   ColumnHeight: string;
 }
