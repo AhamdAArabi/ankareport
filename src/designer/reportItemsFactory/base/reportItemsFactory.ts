@@ -29,7 +29,7 @@ export interface ReportItemsFactoryOptions {
 export default abstract class ReportItemsFactory implements IDisposable {
   public readonly element: HTMLElement;
 
-  public properties:StyleProperties = new StyleProperties();
+  public abstract properties:StyleProperties;
 
   protected readonly _changeEventEmitter = new EventEmitter<ChangeEventArgs>();
 

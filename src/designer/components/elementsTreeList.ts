@@ -2,6 +2,7 @@ import TreeItem, { TreeItemData } from "../../components/treeList/treeItem";
 import TreeList from "../../components/treeList/treeList";
 import ReportItem from "../../core/reportItem";
 import ReportContainer from "../reportContainer/reportContainer";
+import ReportItemsFactory from "../reportItemsFactory/base/reportItemsFactory";
 import ReportSection from "../reportSection/reportSection";
 
 export type ElementsTreeItemData =
@@ -15,7 +16,7 @@ export interface ElementsTreeItemDataSection {
 
 export interface ElementsTreeItemDataItem {
   type: "item";
-  component: ReportItem;
+  component: ReportItemsFactory;
 }
 
 export interface ElementsTreeListOptions {

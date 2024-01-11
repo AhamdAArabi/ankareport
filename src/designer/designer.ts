@@ -91,6 +91,7 @@ export default class Designer {
     if (options.dataSource) this.setDataSource(options.dataSource);
 
     this.reportContainer.addEventListener("select", (e) => {
+      // debugger
       switch (e.type) {
         case "Report":
         case "ReportSection":

@@ -276,7 +276,7 @@ export default class ReportSection {
     this.items.push(item);
 
     this._onChange({ type: "add-item", item });
-
+// debugger
     return item;
   }
 
