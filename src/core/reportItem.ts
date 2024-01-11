@@ -2,7 +2,7 @@ import IDisposable from "./disposable";
 import EventEmitter, { EventCallback } from "./eventEmitter";
 import { IReportItem as LayoutReportItem } from "./layout";
 import { PropertyChangeEventArgs } from "./properties";
-import ReportItemProperties from "./reportItemProperties";
+import ReportLableItemProperties from "./reportLableItemProperties";
 import StyleProperties, { TextAlign } from "./styleProperties";
 import { MultipleStyles } from "./utils/style.utils";
 
@@ -24,7 +24,7 @@ export interface ReportItemOptions {
 export default class ReportItem implements IDisposable {
   public readonly element = document.createElement("div");
 
-  public readonly properties = new ReportItemProperties();
+  public readonly properties = new ReportLableItemProperties();
   private readonly _styles: MultipleStyles;
 
   private readonly _changeEventEmitter = new EventEmitter<ChangeEventArgs>();

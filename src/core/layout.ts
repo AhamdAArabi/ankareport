@@ -35,6 +35,12 @@ export interface IReportLableItem extends IReportItemsFactory {
   text: string;
   binding?: string;
 }
+export interface IReportTableItem extends IReportItemsFactory {
+  RowsNumber: string;
+  ColumnsNumber: string;
+  RowHeight: string;
+  ColumnHeight: string;
+}
 
 export interface IStyle {
   color?: string;

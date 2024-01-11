@@ -224,15 +224,15 @@ export default class ReportSection {
   createItem(defaultPropertiesData: Partial<IReportItemsFactory>, type: string) {
     let item: ReportItemsFactory;
     let defaultProperties:IReportItemsFactory | IReportLableItem;
-    debugger
+    
     switch (type) {
       case ItemsTypes.Label:
         defaultProperties = {
           x: defaultPropertiesData.x!,
           y: defaultPropertiesData.y!,
-          width: defaultPropertiesData.width!,
-          height: defaultPropertiesData.height!,
-          name: defaultPropertiesData.name!,
+          width: 100,
+          height: 20,
+          name: "",
           type: "div",
           text: "label"
         } 
@@ -245,11 +245,11 @@ export default class ReportSection {
         break;
       case ItemsTypes.table:
         defaultProperties = {
-          x: defaultPropertiesData.x!,
-          y: defaultPropertiesData.y!,
-          width: defaultPropertiesData.width!,
-          height: defaultPropertiesData.height!,
-          name: defaultPropertiesData.name!,
+          x: defaultPropertiesData?.x!,
+          y: defaultPropertiesData?.y!,
+          width: 100,
+          height: 50,
+          name: "",
           type: "table"
         } 
         item = new ReportTableItem({
@@ -417,9 +417,7 @@ export default class ReportSection {
 
     let item: ReportItemsFactory= this.createItem({
         x: e.offsetX,
-        y: e.offsetY,
-        width: 100,
-        height: 20,
+        y: e.offsetY
       }, type);
   
     

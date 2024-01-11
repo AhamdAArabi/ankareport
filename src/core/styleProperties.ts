@@ -20,6 +20,11 @@ export default class StyleProperties extends Properties implements IStyle {
   private _fontFamily?: string;
   private _fontSize?: string;
   private _fontWeight?: string;
+  private _x = 0;
+  private _y = 0;
+  private _name = "";
+  private _width = 0;
+  private _height = 0;
 
   constructor(defaultValues?: IStyle) {
     super();
@@ -68,6 +73,21 @@ export default class StyleProperties extends Properties implements IStyle {
   get fontWeight() {
     return this._fontWeight;
   }
+  get x() {
+    return this._x;
+  }
+  get y() {
+    return this._y;
+  }
+  get name() {
+    return this._name;
+  }
+  get width() {
+    return this._width;
+  }
+  get height() {
+    return this._height;
+  }
 
   set color(value: string | undefined) {
     const oldValue = this._color;
@@ -114,9 +134,39 @@ export default class StyleProperties extends Properties implements IStyle {
     this._fontWeight = value;
     this.emitOnChange("fontWeight", value, oldValue);
   }
+  set x(value: number) {
+    const oldValue = this.x;
+    this._x = value;
+    this.emitOnChange("x", value, oldValue);
+  }
+  set y(value: number) {
+    const oldValue = this._y;
+    this._y = value;
+    this.emitOnChange("y", value, oldValue);
+  }
+  set name(value: string) {
+    const oldValue = this.name;
+    this._name = value;
+    this.emitOnChange("name", value, oldValue);
+  }
+  set width(value: number) {
+    const oldValue = this.width;
+    this._width = value;
+    this.emitOnChange("width", value, oldValue);
+  }
+  set height(value: number) {
+    const oldValue = this.height;
+    this._height = value;
+    this.emitOnChange("height", value, oldValue);
+  }
 
   getPropertyDefinitions(): Property[] {
     return [
+      { field: "x", label: "X", type: "number" },
+      { field: "y", label: "Y", type: "number" },
+      { field: "name", label: "Name", type: "string" },
+      { field: "width", label: "Width", type: "number" },
+      { field: "height", label: "Height", type: "number" },
       {
         field: "color",
         label: "Color",

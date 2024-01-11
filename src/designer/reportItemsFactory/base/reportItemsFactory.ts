@@ -2,7 +2,7 @@ import IDisposable from "../../../core/disposable";
 import EventEmitter, { EventCallback } from "../../../core/eventEmitter";
 import { IReportItemsFactory as LayoutReportItem } from "../../../core/layout";
 import { PropertyChangeEventArgs } from "../../../core/properties";
-import ReportItemProperties from "../../../core/reportItemProperties";
+import ReportLableItemProperties from "../../../core/reportLableItemProperties";
 import StyleProperties, { TextAlign } from "../../../core/styleProperties";
 import { MultipleStyles } from "../../../core/utils/style.utils";
 
@@ -29,7 +29,7 @@ export interface ReportItemsFactoryOptions {
 export default abstract class ReportItemsFactory implements IDisposable {
   public readonly element: HTMLElement;
 
-  public readonly properties = new ReportItemProperties();
+  public properties:StyleProperties = new StyleProperties();
 
   protected readonly _changeEventEmitter = new EventEmitter<ChangeEventArgs>();
 

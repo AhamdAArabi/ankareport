@@ -5,13 +5,13 @@ const DEFAULT_SECTION_HEIGHT = 100;
 const MIN_SECTION_HEIGHT = 10;
 
 export default class ReportSectionProperties extends StyleProperties {
-  private _height: number = DEFAULT_SECTION_HEIGHT;
+  // private _height: number = DEFAULT_SECTION_HEIGHT;
   private _binding = "";
   private _title = "Section";
 
-  get height() {
-    return this._height;
-  }
+  // get height() {
+  //   return this._height;
+  // }
   get binding() {
     return this._binding;
   }
@@ -19,11 +19,11 @@ export default class ReportSectionProperties extends StyleProperties {
     return this._title;
   }
 
-  set height(value: number) {
-    const oldValue = this.height;
-    this._height = Math.max(MIN_SECTION_HEIGHT, value);
-    this.emitOnChange("height", value, oldValue);
-  }
+  // set height(value: number) {
+  //   const oldValue = this.height;
+  //   this._height = Math.max(MIN_SECTION_HEIGHT, value);
+  //   this.emitOnChange("height", value, oldValue);
+  // }
   set binding(value: string) {
     const oldValue = this.binding;
     this._binding = value;
@@ -37,7 +37,7 @@ export default class ReportSectionProperties extends StyleProperties {
 
   getPropertyDefinitions(): Property[] {
     return [
-      { field: "height", label: "Height", type: "number" },
+      // { field: "height", label: "Height", type: "number" },
       ...super.getPropertyDefinitions(),
     ];
   }
