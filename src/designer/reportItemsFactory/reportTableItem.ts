@@ -1,4 +1,4 @@
-import { IReportTableItem as LayoutReportTableItem } from "../../core/layout";
+import { IReportTableItem, IReportTableItem as LayoutReportTableItem } from "../../core/layout";
 import { ChangeEventArgs } from "../../core/properties";
 import ReportTableItemProperties from "../../core/reportTableItemProperties";
 import StyleProperties from "../../core/styleProperties";
@@ -20,8 +20,7 @@ export default class ReportTableItem extends ReportItemsFactory {
   constructor(options: ReportItemsFactoryOptions) {
     super(options);
 
-    this.properties = new ReportTableItemProperties();
-    this.properties =  this.properties as ReportTableItemProperties;
+    this.properties = new ReportTableItemProperties(options.defaultProperties as IReportTableItem);
 
     this._styles = new MultipleStyles(...options.parentStyles, this.properties, this.properties);
 
@@ -33,24 +32,7 @@ export default class ReportTableItem extends ReportItemsFactory {
   }
 
    init() {
-    const headersRow: HTMLElement = document.createElement("tr");
-    const headers: Array<HTMLElement> = [];
-    const header: HTMLElement = document.createElement("th")
-    header.innerText = "Header";
-    header.style.border = "1px solid black"
-    headers.push(header);
-    headersRow.append(...headers);
-    
-    const dataRow: HTMLElement = document.createElement("tr");
-    const dataElements: Array<HTMLElement> = [];
-    const data: HTMLElement = document.createElement("td")
-    data.innerText = "Data";
-    data.style.border = "1px solid black"
-    dataElements.push(data);
-    dataRow.append(...dataElements);
 
-    this.element.append(headersRow, dataRow);
-     
     this.element.tabIndex = 0;
     this.element.style.display = "table";
     this.element.style.position = "absolute";
@@ -69,6 +51,7 @@ export default class ReportTableItem extends ReportItemsFactory {
   }
 
   refresh() {
+    this.initTableCells()
     this.element.style.left = `${this.properties.x}px`;
     this.element.style.top = `${this.properties.y}px`;
     
@@ -95,6 +78,43 @@ export default class ReportTableItem extends ReportItemsFactory {
     )!;
     this.element.style.fontSize = this._styles.getStyle("fontSize", "12px")!;
     this.element.style.fontWeight = this._styles.getStyle("fontWeight", "")!;
+  }
+
+  initTableCells() {
+    
+    this.element.innerHTML = "";
+
+    const headersRow: HTMLTableRowElement = document.createElement("tr");
+    const headers: Array<HTMLTableCellElement> = [];
+    for (let h = 0; h < this.properties.columnsNumber; h++) {
+      
+      const header: HTMLTableCellElement = document.createElement("th")
+      header.innerText = "Header";
+      header.style.border = "1px solid black"
+
+      headers.push(header);
+      
+    }
+    headersRow.append(...headers);
+
+    const rows: Array<HTMLTableRowElement> = [];
+    for (let r = 0; r < this.properties.rowsNumber; r++) {
+      const dataRow: HTMLTableRowElement = document.createElement("tr");
+      
+      const dataElements: Array<HTMLTableCellElement> = [];
+      for (let h = 0; h < this.properties.columnsNumber; h++) {
+        const data: HTMLTableCellElement = document.createElement("td")
+        data.innerText = "Data";
+        data.style.border = "1px solid black"
+        
+        dataElements.push(data);
+      }
+      dataRow.append(...dataElements);
+      rows.push(dataRow)
+    }
+     
+
+    this.element.append(headersRow, ...rows);
   }
 
 
@@ -136,10 +156,10 @@ export default class ReportTableItem extends ReportItemsFactory {
       fontSize: this.properties.fontSize,
       fontWeight: this.properties.fontWeight,
       type: this.element.tagName,
-      ColumnHeight: this.properties.columnHeight,
-      RowHeight: this.properties.rowHeight,
-      RowsNumber: this.properties.rowsNumber,
-      ColumnsNumber: this.properties.columnsNumber,
+      columnHeight: this.properties.columnHeight,
+      rowHeight: this.properties.rowHeight,
+      rowsNumber: this.properties.rowsNumber,
+      columnsNumber: this.properties.columnsNumber,
     };
   }
 

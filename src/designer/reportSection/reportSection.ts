@@ -251,8 +251,8 @@ export default class ReportSection {
           height: 50,
           name: "",
           type: "table",
-          ColumnsNumber: 1,
-          RowsNumber: 1
+          columnsNumber: 1,
+          rowsNumber: 1
         } 
         item = new ReportTableItem({
           parentStyles: this.styles.getList(),

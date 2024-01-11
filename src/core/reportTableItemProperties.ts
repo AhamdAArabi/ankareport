@@ -1,7 +1,25 @@
 import { Property } from "../components/propertyGrid/property";
+import { IReportTableItem } from "./layout";
 import StyleProperties from "./styleProperties";
 
 export default class ReportTableItemProperties extends StyleProperties {
+
+
+  constructor(defaultValues?: IReportTableItem) {
+    super(defaultValues);
+    
+    if (!defaultValues) return;
+
+    this.beginUpdate();
+
+    this._rowsNumber = defaultValues.rowsNumber;
+    this._columnsNumber = defaultValues.columnsNumber;
+    this._rowHeight = defaultValues.rowHeight;
+    this._columnHeight = defaultValues.columnHeight;
+
+    this.endUpdate();
+  }
+
 
   private _rowsNumber:number = 0;
   private _columnsNumber:number = 0;

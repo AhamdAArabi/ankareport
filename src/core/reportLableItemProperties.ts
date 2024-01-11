@@ -1,7 +1,21 @@
 import { Property } from "../components/propertyGrid/property";
+import { IReportLableItem } from "./layout";
 import StyleProperties from "./styleProperties";
 
 export default class ReportLableItemProperties extends StyleProperties {
+
+  constructor(defaultValues?: IReportLableItem) {
+    super(defaultValues);
+    
+    if (!defaultValues) return;
+
+    this.beginUpdate();
+
+    this._text = defaultValues.text;
+    this._binding = defaultValues.binding || "";
+
+    this.endUpdate();
+  }
 
   private _text = "";
   private _binding = "";
