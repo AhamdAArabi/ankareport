@@ -115,6 +115,18 @@ export default class ReportTableItem extends ReportItemsFactory {
      
 
     this.element.append(headersRow, ...rows);
+
+    //here calculate the width by columns number
+    const estimatedWidth = this.properties.columnsNumber * 50 
+    if(this.properties.width < estimatedWidth){
+      this.properties.width = estimatedWidth;
+    }
+
+    //here calculate the height by rows number
+    const estimatedHeight = (this.properties.rowsNumber + 1) * 20 
+    if(this.properties.height < estimatedHeight){
+      this.properties.height = estimatedHeight;
+    }
   }
 
 
