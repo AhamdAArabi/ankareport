@@ -7,7 +7,6 @@ import { MultipleStyles } from "../../core/utils/style.utils";
 import { DataSourceTreeItemData } from "../components/dataSourceTreeList";
 import Resizer, { ResizerOrientation } from "../components/resizer";
 import Designer from "../designer";
-import DesignerReportItem from "../reportItem/designerReportItem";
 import ReportItemSelector from "../reportItem/reportItemSelector";
 import {
   ChangeEventArgs,

@@ -1,11 +1,15 @@
-import { ISection, IStyle } from "../core/layout";
+import { IReportImageItem, IReportItemsFactory, IReportLableItem, IReportTableItem, ISection, IStyle } from "../core/layout";
 import ReportItem from "../core/reportItem";
 import StyleProperties, { TextAlign } from "../core/styleProperties";
+import ReportItemsFactory, { ItemsTypes } from "../designer/reportItemsFactory/base/reportItemsFactory";
+import ReportImageItem from "../designer/reportItemsFactory/reportImageItem";
+import ReportLableItem from "../designer/reportItemsFactory/reportLableItem";
+import ReportTableItem from "../designer/reportItemsFactory/reportTableItem";
 
 export default class Section {
   public readonly element = document.createElement("div");
   public readonly elementSections = document.createElement("div");
-  private readonly reportItems: ReportItem[] = [];
+  private readonly reportItems: ReportItemsFactory[] = [];
 
   constructor(
     private readonly layout: ISection,
@@ -28,7 +32,9 @@ export default class Section {
     defaultStylesList.push(new StyleProperties(this.layout));
 
     this.layout.items?.forEach((layout) => {
-      const item = new ReportItem({ parentStyles: defaultStylesList });
+      const item: ReportItemsFactory = this.itemCreation(layout, defaultStylesList);
+
+      const itemss = new ReportItem({ parentStyles: defaultStylesList });
       item.properties.x = layout.x;
       item.properties.y = layout.y;
       item.properties.width = layout.width;
@@ -68,5 +74,73 @@ export default class Section {
         this.elementSections.appendChild(section.elementSections);
       });
     });
+  }
+  itemCreation( layout:IReportItemsFactory, styles: StyleProperties[]): ReportItemsFactory {
+    let item: ReportItemsFactory;
+    let defaultProperties:
+      | IReportItemsFactory
+      | IReportLableItem
+      | IReportTableItem
+      | IReportImageItem;
+
+    switch (layout.type) {
+      case ItemsTypes.Label:
+        defaultProperties = {
+          x: layout.x!,
+          y: layout.y!,
+          width: 100,
+          height: 20,
+          name: "",
+          type: "div",
+          text: "label",
+        };
+        item = new ReportLableItem({
+          parentStyles: styles,
+          defaultProperties
+        });
+
+        break;
+      case ItemsTypes.table:
+        defaultProperties = {
+          x: layout?.x!,
+          y: layout?.y!,
+          width: 100,
+          height: 50,
+          name: "",
+          type: "table",
+          columnsNumber: 1,
+          rowsNumber: 1,
+        };
+        item = new ReportTableItem({
+          parentStyles: styles,
+          defaultProperties
+        });
+
+        break;
+      case ItemsTypes.image:
+        defaultProperties = {
+          x: layout?.x!,
+          y: layout?.y!,
+          width: 100,
+          height: 50,
+          name: "",
+          type: "img",
+          src: "",
+        };
+        item = new ReportImageItem({
+          parentStyles:  styles,
+          defaultProperties
+        });
+
+        break;
+
+      default:
+        item = new ReportLableItem({
+          parentStyles:  styles,
+          defaultProperties: { ...layout, type: "div" }
+        });
+        break;
+    }
+    return item;
   }
 }
