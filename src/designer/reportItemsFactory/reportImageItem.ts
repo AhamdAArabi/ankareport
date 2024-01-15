@@ -71,8 +71,10 @@ export default class ReportImageItem extends ReportItemsFactory {
     this._uploadInput.addEventListener('change',(e:Event) => this.handleDynamicImageUpload(e, this._uploadInput, (result) => {
       // Handle the result as needed
       console.log('Uploaded data:', result);
-      if(this.element instanceof HTMLImageElement)
+      if(this.element instanceof HTMLImageElement){
         this.element.src = result;
+        this.properties.src = result;
+      }
 
       // Remove the dynamically created file input
       document.body.removeChild(this._uploadInput);
@@ -94,7 +96,6 @@ export default class ReportImageItem extends ReportItemsFactory {
             // Create a FileReader to read the uploaded image
             const reader = new FileReader();
 
-            // reader.onload = this.handleLoadImage;
             reader.onload = (e: ProgressEvent<FileReader>) => {
               const result = e.target?.result as string;
               callback(result);
@@ -109,20 +110,7 @@ export default class ReportImageItem extends ReportItemsFactory {
         }
     }
   }
-  handleLoadImage(e: ProgressEvent<FileReader>){
-    
-    const result = e.target?.result as string;
  
-    // Log or handle the uploaded data as needed
-    console.log('Uploaded data:', result);
-
-    if(this.element instanceof HTMLImageElement)
-      this.element.src = result;
-    // _uploadedImage = result;
-    // Remove the dynamically created file input
-    document.body.removeChild(this._uploadInput);
-  
-  }
   refresh() {
     this.element.style.left = `${this.properties.x}px`;
     this.element.style.top = `${this.properties.y}px`;

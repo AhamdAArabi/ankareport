@@ -34,7 +34,6 @@ export default class Section {
     this.layout.items?.forEach((layout) => {
       const item: ReportItemsFactory = this.itemCreation(layout, defaultStylesList);
 
-      const itemss = new ReportItem({ parentStyles: defaultStylesList });
       item.properties.x = layout.x;
       item.properties.y = layout.y;
       item.properties.width = layout.width;

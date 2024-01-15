@@ -43,6 +43,9 @@ export default class PropertyGridRow {
       this._changeEventEmitter.emit({ value: e.value });
     });
 
+    if(this.editor.element instanceof HTMLInputElement)
+      this.editor.element.disabled = this.property.isDisabled || false;
+
     this.refresh();
   }
 

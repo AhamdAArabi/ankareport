@@ -22,6 +22,7 @@ export interface PropertyEditor {
 export interface Property {
   field: string;
   label: string;
+  isDisabled?:boolean;
   type: PropertyType;
   editor?: PropertyEditor;
 }

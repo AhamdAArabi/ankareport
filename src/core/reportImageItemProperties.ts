@@ -32,7 +32,7 @@ export default class ReportImageItemProperties extends StyleProperties {
 
   getPropertyDefinitions(): Property[] {
     return [
-      { field: "src", label: "Source", type: "string" },
+      { field: "src", label: "Source", type: "string", isDisabled: true},
       ...super.getPropertyDefinitions(),
     ];
   }

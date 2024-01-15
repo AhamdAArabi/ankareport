@@ -1,4 +1,3 @@
-import ReportItem from "../../core/reportItem";
 import ReportItemsFactory from "../reportItemsFactory/base/reportItemsFactory";
 import ReportItemSelector from "./reportItemSelector";
 
