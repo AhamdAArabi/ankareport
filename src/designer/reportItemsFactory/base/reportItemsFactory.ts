@@ -27,7 +27,7 @@ export interface ReportItemsFactoryOptions {
 }
 
 export default abstract class ReportItemsFactory implements IDisposable {
-  public readonly element: HTMLElement;
+  public readonly element: HTMLElement | HTMLTableElement | HTMLImageElement;
 
   public abstract properties:StyleProperties;
 

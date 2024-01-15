@@ -41,6 +41,9 @@ export interface IReportTableItem extends IReportItemsFactory {
   rowHeight: string;
   columnHeight: string;
 }
+export interface IReportImageItem extends IReportItemsFactory {
+  src: string;
+}
 
 export interface IStyle {
   color?: string;

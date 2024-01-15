@@ -20,5 +20,11 @@ export default class ToolbarLeftMenu extends Toolbar {
       draggable: true,
       type: ItemsTypes.table
     });
+    this.labelButton = this.addButton({
+      text: "🖼️",
+      title: "Image",
+      draggable: true,
+      type: ItemsTypes.image
+    });
   }
 }

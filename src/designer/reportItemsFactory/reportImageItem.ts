@@ -1,27 +1,28 @@
-import { IReportLableItem, IReportLableItem as LayoutReportLableItem } from "../../core/layout";
+import { IReportImageItem, IReportImageItem as LayoutReportImageItem } from "../../core/layout";
 import { ChangeEventArgs } from "../../core/properties";
-import ReportLableItemProperties from "../../core/reportLableItemProperties";
+import ReportImageItemProperties from "../../core/reportImageItemProperties";
+import ReportTableItemProperties from "../../core/reportTableItemProperties";
+import StyleProperties from "../../core/styleProperties";
 import styleProperties, { TextAlign } from "../../core/styleProperties";
 import { MultipleStyles } from "../../core/utils/style.utils";
 import ReportItemsFactory, { ReportItemsFactoryOptions } from "./base/reportItemsFactory";
 
 
 export interface ReportLableItemOptions extends ReportItemsFactoryOptions {
-  defaultProperties: Partial<LayoutReportLableItem>;
+  defaultProperties: Partial<LayoutReportImageItem>;
 }
 
-export default class ReportLableItem extends ReportItemsFactory {
+export default class ReportImageItem extends ReportItemsFactory {
 
-
+  public properties: ReportImageItemProperties;
   private readonly _styles: MultipleStyles;
-  public properties: ReportLableItemProperties;
-
+  private _uploadInput: HTMLInputElement = document.createElement("input");
   
+
+
   constructor(options: ReportItemsFactoryOptions) {
     super(options);
-    
-    
-    this.properties = new ReportLableItemProperties(options.defaultProperties as IReportLableItem);
+    this.properties = new ReportImageItemProperties(options.defaultProperties as IReportImageItem);
     this._styles = new MultipleStyles(...options.parentStyles, this.properties);
 
     if (options.defaultProperties) {
@@ -32,9 +33,13 @@ export default class ReportLableItem extends ReportItemsFactory {
   }
 
    init() {
-    this.element.tabIndex = 0;
+    if(this.element instanceof HTMLImageElement){
+      this.element.src = "";
+      this.handleOpenUploader();
+    }
 
-    this.element.style.display = "inline-block";
+    this.element.tabIndex = 0;
+    this.element.style.display = "table";
     this.element.style.position = "absolute";
     this.element.style.userSelect = "none";
     this.element.style.outline = "none";
@@ -49,13 +54,82 @@ export default class ReportLableItem extends ReportItemsFactory {
 
     this.refresh();
   }
+  handleOpenUploader() {// Create a file input dynamically
+    // this._uploadInput = document.createElement('input');
+    this._uploadInput.type = 'file';
+    this._uploadInput.id = 'dynamicUploadInput';
+    // Set accepted file types (extensions)
+    this._uploadInput.accept = 'image/*';
 
+    // Append the input to the body (or any other element)
+    document.body.appendChild(this._uploadInput);
+
+    // Trigger the file input programmatically
+    this._uploadInput.click();
+
+    // Add event listener to the dynamically created file input
+    this._uploadInput.addEventListener('change',(e:Event) => this.handleDynamicImageUpload(e, this._uploadInput, (result) => {
+      // Handle the result as needed
+      console.log('Uploaded data:', result);
+      if(this.element instanceof HTMLImageElement)
+        this.element.src = result;
+
+      // Remove the dynamically created file input
+      document.body.removeChild(this._uploadInput);
+  }));
+
+    
+  }
+  handleDynamicImageUpload(event: Event, uploadInput: HTMLInputElement, callback: (result: string) => void ) {
+    const fileInput = event.target as HTMLInputElement;
+    const file = fileInput.files && fileInput.files[0];
+
+    if (file) {
+        // Check if the file has an image extension
+        const allowedExtensions: string[] = ['jpg', 'jpeg', 'png', 'gif'];
+        const fileNameParts = file.name.split('.');
+        const fileExtension = fileNameParts[fileNameParts.length - 1].toLowerCase();
+
+        if (allowedExtensions.includes(fileExtension)) {
+            // Create a FileReader to read the uploaded image
+            const reader = new FileReader();
+
+            // reader.onload = this.handleLoadImage;
+            reader.onload = (e: ProgressEvent<FileReader>) => {
+              const result = e.target?.result as string;
+              callback(result);
+          };
+
+            // Read the uploaded image as a data URL
+            reader.readAsDataURL(file);
+        } else {
+            alert('Invalid file type. Please select an image.');
+            // Remove the dynamically created file input
+            document.body.removeChild(uploadInput);
+        }
+    }
+  }
+  handleLoadImage(e: ProgressEvent<FileReader>){
+    
+    const result = e.target?.result as string;
+ 
+    // Log or handle the uploaded data as needed
+    console.log('Uploaded data:', result);
+
+    if(this.element instanceof HTMLImageElement)
+      this.element.src = result;
+    // _uploadedImage = result;
+    // Remove the dynamically created file input
+    document.body.removeChild(this._uploadInput);
+  
+  }
   refresh() {
     this.element.style.left = `${this.properties.x}px`;
     this.element.style.top = `${this.properties.y}px`;
+    
     this.element.style.width = `${this.properties.width}px`;
     this.element.style.height = `${this.properties.height}px`;
-    this.element.innerText = this.properties.text;
+    // this.element.innerText = this._properties.text;
 
     this.element.style.color = this._styles.getStyle("color", "")!;
     this.element.style.backgroundColor = this._styles.getStyle(
@@ -79,15 +153,13 @@ export default class ReportLableItem extends ReportItemsFactory {
   }
 
 
-  loadLayout(layout: Partial<LayoutReportLableItem>) {
+  loadLayout(layout: Partial<LayoutReportImageItem>) {
     this.properties.beginUpdate();
     this.properties.x = layout.x ?? 0;
     this.properties.y = layout.y ?? 0;
     this.properties.width = layout.width ?? 0;
     this.properties.height = layout.height ?? 0;
     this.properties.name = layout.name ?? "";
-    this.properties.text = layout.text ?? "";
-    this.properties.binding = layout.binding || "";
     this.properties.color = layout.color;
     this.properties.backgroundColor = layout.backgroundColor;
     this.properties.textAlign = layout.textAlign as TextAlign;
@@ -97,12 +169,13 @@ export default class ReportLableItem extends ReportItemsFactory {
     this.properties.fontFamily = layout.fontFamily;
     this.properties.fontSize = layout.fontSize;
     this.properties.fontWeight = layout.fontWeight;
+    this.properties.src = layout.src ?? "";
     this.properties.endUpdate();
 
     this.refresh();
   }
 
-  toJSON(): LayoutReportLableItem {
+  toJSON(): LayoutReportImageItem {
     return {
       x: this.properties.x,
       y: this.properties.y,
@@ -119,8 +192,7 @@ export default class ReportLableItem extends ReportItemsFactory {
       fontSize: this.properties.fontSize,
       fontWeight: this.properties.fontWeight,
       type: this.element.tagName,
-      text: this.properties.text,
-      binding: this.properties.binding,
+      src: this.properties.src,
     };
   }
 

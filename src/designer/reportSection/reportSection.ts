@@ -1,7 +1,7 @@
 import ContextMenu from "../../components/contextMenu/contextMenu";
 import { MenuButton } from "../../components/menu/menu";
 import EventEmitter, { EventCallback } from "../../core/eventEmitter";
-import { ISection, IReportItem, IReportItemsFactory, IReportLableItem, IReportTableItem } from "../../core/layout";
+import { ISection, IReportItem, IReportItemsFactory, IReportLableItem, IReportTableItem, IReportImageItem } from "../../core/layout";
 import StyleProperties, { TextAlign } from "../../core/styleProperties";
 import { MultipleStyles } from "../../core/utils/style.utils";
 import { DataSourceTreeItemData } from "../components/dataSourceTreeList";
@@ -26,6 +26,7 @@ import AreaSelector from "./area-selector";
 import ReportItemsFactory, { ItemsTypes } from "../reportItemsFactory/base/reportItemsFactory";
 import ReportLableItem from "../reportItemsFactory/reportLableItem";
 import ReportTableItem from "../reportItemsFactory/reportTableItem";
+import ReportImageItem from "../reportItemsFactory/reportImageItem";
 
 export interface ReportSectionOptions {
   title: string;
@@ -223,7 +224,7 @@ export default class ReportSection {
 
   createItem(defaultPropertiesData: Partial<IReportItemsFactory>, type: string) {
     let item: ReportItemsFactory;
-    let defaultProperties:IReportItemsFactory | IReportLableItem | IReportTableItem;
+    let defaultProperties:IReportItemsFactory | IReportLableItem | IReportTableItem | IReportImageItem;
     
     switch (type) {
       case ItemsTypes.Label:
@@ -255,6 +256,23 @@ export default class ReportSection {
           rowsNumber: 1
         } 
         item = new ReportTableItem({
+          parentStyles: this.styles.getList(),
+          defaultProperties,
+          appendTo: this.elementContent,
+        });
+        
+        break;
+      case ItemsTypes.image:
+        defaultProperties = {
+          x: defaultPropertiesData?.x!,
+          y: defaultPropertiesData?.y!,
+          width: 100,
+          height: 50,
+          name: "",
+          type: "img",
+          src:""
+        } 
+        item = new ReportImageItem({
           parentStyles: this.styles.getList(),
           defaultProperties,
           appendTo: this.elementContent,

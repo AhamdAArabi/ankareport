@@ -22,7 +22,7 @@ export default class ReportTableItem extends ReportItemsFactory {
 
     this.properties = new ReportTableItemProperties(options.defaultProperties as IReportTableItem);
 
-    this._styles = new MultipleStyles(...options.parentStyles, this.properties, this.properties);
+    this._styles = new MultipleStyles(...options.parentStyles, this.properties);
 
     if (options.defaultProperties) {
       this.loadLayout(options.defaultProperties);
@@ -123,7 +123,7 @@ export default class ReportTableItem extends ReportItemsFactory {
     }
 
     //here calculate the height by rows number
-    const estimatedHeight = (this.properties.rowsNumber + 1) * 20 
+    const estimatedHeight = (this.properties.rowsNumber * 1 + 1) * 20 
     if(this.properties.height < estimatedHeight){
       this.properties.height = estimatedHeight;
     }
