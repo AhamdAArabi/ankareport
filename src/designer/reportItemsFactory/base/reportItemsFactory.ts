@@ -9,7 +9,7 @@ import { MultipleStyles } from "../../../core/utils/style.utils";
 export enum ItemsTypes {
   Label="LABEL",
   table="TABLE",
-  image="IMAGE"
+  image="IMG"
 }
 export interface ChangeEventArgs {
   changes: PropertyChangeEventArgs[];

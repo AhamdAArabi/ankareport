@@ -221,7 +221,7 @@ export default class ReportSection {
     }
   }
 
-  createItem(defaultPropertiesData: Partial<IReportItemsFactory>, type: string) {
+  createItem(defaultPropertiesData: Partial<IReportItemsFactory> , type: string) {
     let item: ReportItemsFactory;
     let defaultProperties:IReportItemsFactory | IReportLableItem | IReportTableItem | IReportImageItem;
     
@@ -269,7 +269,7 @@ export default class ReportSection {
           height: 50,
           name: "",
           type: "img",
-          src:""
+          src: (defaultPropertiesData as IReportImageItem)?.src!
         } 
         item = new ReportImageItem({
           parentStyles: this.styles.getList(),

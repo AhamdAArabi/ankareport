@@ -1,5 +1,4 @@
 import { IReportImageItem, IReportItemsFactory, IReportLableItem, IReportTableItem, ISection, IStyle } from "../core/layout";
-import ReportItem from "../core/reportItem";
 import StyleProperties, { TextAlign } from "../core/styleProperties";
 import ReportItemsFactory, { ItemsTypes } from "../designer/reportItemsFactory/base/reportItemsFactory";
 import ReportImageItem from "../designer/reportItemsFactory/reportImageItem";
@@ -124,7 +123,7 @@ export default class Section {
           height: 50,
           name: "",
           type: "img",
-          src: "",
+          src: (layout as IReportImageItem)?.src!
         };
         item = new ReportImageItem({
           parentStyles:  styles,

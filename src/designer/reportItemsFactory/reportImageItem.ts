@@ -34,8 +34,12 @@ export default class ReportImageItem extends ReportItemsFactory {
 
    init() {
     if(this.element instanceof HTMLImageElement){
-      this.element.src = "";
-      this.handleOpenUploader();
+      if(this.properties.src == ""){
+        this.element.src = "";
+        this.handleOpenUploader();
+      }else{
+        this.element.src = this.properties.src;
+      }
     }
 
     this.element.tabIndex = 0;
